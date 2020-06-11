@@ -1,2 +1,2 @@
-Feed the monkey
-sleep
+[x] feed dogs
+[ ] train lions

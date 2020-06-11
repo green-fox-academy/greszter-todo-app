@@ -1,7 +1,7 @@
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,12 @@ import java.util.List;
 public class ListBuilder {
 
     public static void addItem(String todoItem) {
-        List<String> todo = new ArrayList<>();
-        todo.add(todoItem);
         try {
-            Path filePath = Paths.get("data.txt");
-            Files.write(filePath, todo);
+            todoItem = "[ ] " + todoItem + "\r\n";
+            FileWriter writer = new FileWriter("data.txt", true);
+            BufferedWriter out = new BufferedWriter(writer);
+            out.write(todoItem);
+            out.close();
         } catch (IOException e) {
             System.out.println("Uh-oh, could not write the file!");
             System.exit(2);
@@ -42,14 +43,17 @@ public class ListBuilder {
     }
 
     public static void checkItem(int itemNumber) {
-        char check = 'x';
-        String task = FileHandling.readFile("data.txt").get(itemNumber - 1);
-        String checkedTask = check + task;
-
-        FileHandling.readFile("data.txt").get(itemNumber - 1).replace(task, checkedTask);
-
+        List<String> newList = new ArrayList<>();
+        String checkedItem = FileHandling.readFile("data.txt").get(itemNumber - 1).replace("[ ]", "[x]");
+        for (int i = 0; i < FileHandling.readFile("data.txt").size(); i++) {
+            if (i == itemNumber - 1) {
+                newList.add(checkedItem);
+            } else {
+                newList.add(FileHandling.readFile("data.txt").get(i));
+            }
+        }
         try {
-            Files.write(Paths.get("data.txt"), FileHandling.readFile("data.txt"));
+            Files.write(Paths.get("data.txt"), newList);
         } catch (IOException e) {
             e.printStackTrace();
         }
