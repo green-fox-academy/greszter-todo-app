@@ -45,13 +45,13 @@ public class ListBuilder {
 
   public static void checkItem(int itemNumber) {
     List<String> newList = new ArrayList<>();
-    String checkedItem =
-        FileHandling.readFile("data.txt").get(itemNumber - 1).replace("[ ]", "[x]");
-    for (int i = 0; i < FileHandling.readFile("data.txt").size(); i++) {
+    List<String> file = FileHandling.readFile("data.txt");
+    String checkedItem = file.get(itemNumber - 1).replace("[ ]", "[x]");
+    for (int i = 0; i < file.size(); i++) {
       if (i == itemNumber - 1) {
         newList.add(checkedItem);
       } else {
-        newList.add(FileHandling.readFile("data.txt").get(i));
+        newList.add(file.get(i));
       }
     }
     try {

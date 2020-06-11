@@ -1,2 +1,4 @@
 [x] feed dogs
-[ ] train lions
+[x] train lions
+[ ] feed cat
+[ ] 6
